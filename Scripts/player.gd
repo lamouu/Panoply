@@ -195,10 +195,10 @@ func _slerp_pullback(delta):
 		sword_state = SwordState.IDLE
 
 
-func _calc_windup(startQuaternion):
+func _calc_windup(start_quat):
 	var windup_start: Basis = %WeaponPivot.basis
 	
-	var windup_end := Basis(startQuaternion)
+	var windup_end := Basis(start_quat)
 
 	return {"start": windup_start, "end": windup_end}
 
