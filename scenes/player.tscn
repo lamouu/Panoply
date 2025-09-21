@@ -90,3 +90,16 @@ libraries = {
 &"": ExtResource("4_qlg0r")
 }
 autoplay = "idle"
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="HitstopCooldown" type="Timer" parent="Timers"]
+wait_time = 1.5
+ignore_time_scale = true
+
+[node name="HitstopDuration" type="Timer" parent="Timers"]
+wait_time = 0.2
+ignore_time_scale = true
+
+[connection signal="timeout" from="Timers/HitstopCooldown" to="." method="_on_hitstop_cooldown_timeout"]
+[connection signal="timeout" from="Timers/HitstopDuration" to="." method="_on_hitstop_duration_timeout"]
