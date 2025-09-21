@@ -17,7 +17,7 @@ const CROUCH_HEIGHT = 1.0
 const BOB_FREQUENCY = 3.0
 const BOB_AMPLITUDE = 0.04
 
-# Sword (swing curve accessable in Player node)
+# Sword
 const WINDUP_TIME = 0.3
 const SWING_TIME = 0.55
 const PULLBACK_TIME = 0.5

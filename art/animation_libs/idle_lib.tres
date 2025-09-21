@@ -12,9 +12,9 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(-2, -2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0.46126786, -0.5537075, -0.727506), Vector3(0.461, -0.669, -0.728)]
+"values": [Vector3(0.41258493, -0.53567946, -0.4258669), Vector3(0.413, -0.496, -0.426)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -24,9 +24,9 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(-2, -2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.13962634, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(-0.061086524, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_n804x"]

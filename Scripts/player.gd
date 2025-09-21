@@ -37,7 +37,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -203,8 +203,8 @@ func _calc_windup(start_quat):
 	return {"start": windup_start, "end": windup_end}
 
 
-func _calc_swing(screen_angle):
-	var swing_direction = Quaternion(Vector3.FORWARD, screen_angle.angle() - PI/2)
+func _calc_swing(mouse_angle):
+	var swing_direction = Quaternion(Vector3.FORWARD, mouse_angle.angle() - PI/2)
 	swing_direction = swing_direction.normalized()
 	
 	var swing_start = swing_direction*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_START_ROTATIION)
