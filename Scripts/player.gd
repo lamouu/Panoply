@@ -124,13 +124,16 @@ func _move_camera(event):
 	var x_rotation
 	var x_sensitivity = cons.X_SENS
 
-	if sword_state == SwordState.SWING:
-		y_sensitivity *= cons.TURN_CAP
-		x_sensitivity *= cons.TURN_CAP
-
 	y_rotation = -event.relative.x * x_sensitivity
 	x_rotation = -event.relative.y * y_sensitivity
-
+	
+	if sword_state == SwordState.SWING or sword_state == SwordState.WINDUP:
+		y_rotation = clamp(y_rotation, - cons.TURN_CAP, cons.TURN_CAP)
+		x_rotation = clamp(x_rotation, - cons.TURN_CAP, cons.TURN_CAP)
+	else:
+		y_rotation = -event.relative.x * x_sensitivity
+		x_rotation = -event.relative.y * y_sensitivity
+		
 	rotate_y(y_rotation)
 	$Camera3D.rotate_x(x_rotation)
 
@@ -236,3 +239,10 @@ func _get_idle_start():
 	var idle_end = idle_pos.from_euler(idle_rot)
 	
 	return idle_end
+
+
+func hitstop():
+	pass
+	
+	#Engine.time_scale = cons.HITSTOP_DURATION
+	#Engine.time_scale = 1
