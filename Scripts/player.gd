@@ -10,19 +10,28 @@ enum SwordState {
 	FLOURISH,
 }
 
+# sword animation curves
+@export var windup_curve: Curve
 @export var swing_curve: Curve
+@export var pullback_curve: Curve
+@export var stab_curve: Curve
 
 # movement variables
 var player_speed : float
 var headbob_t := 0.0
 
+# animation variables
+var animation_library : AnimationLibrary = load("res://art/animation_libs/idle_lib.tres")
+
 # sword variables
 var sword_state := SwordState.IDLE
 var	mouse_movement_angle : Vector2
-var swingRotations : Dictionary
-var windupRotations : Dictionary
+var swing_rotations : Dictionary
+var windup_basis : Dictionary
+var pullback_basis : Dictionary
 var windup_timer := 0.0
 var swing_timer := 0.0
+var pullback_timer := 0.0
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -75,11 +84,11 @@ func _process(delta):
 		SwordState.IDLE:
 			_start_idle()
 		SwordState.WINDUP:
-			_start_windup()
+			_slerp_windup(delta)
 		SwordState.SWING:
 			_slerp_swing(delta)
 		SwordState.PULLBACK:
-			pass
+			_slerp_pullback(delta)
 		SwordState.STAB:
 			pass
 		SwordState.PARRY:
@@ -92,8 +101,8 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		_move_camera(event)
 
-	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT:
-		_start_swing()
+	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT and sword_state == SwordState.IDLE:
+		_start_windup()
 
 
 func _headbob(time):
@@ -104,43 +113,59 @@ func _headbob(time):
 
 
 func _move_camera(event):
-	var yRotation
-	var ySens
-	var xRotation
-	var xSens
-	
-	if sword_state == SwordState.SWING:
-		ySens = cons.ySensitivity * cons.TURN_CAP
-		xSens = cons.xSensitivity * cons.TURN_CAP
-	else:
-		ySens = cons.ySensitivity
-		xSens = cons.xSensitivity
-	
-	yRotation = -event.relative.x * xSens
-	xRotation = -event.relative.y * ySens
+	var y_rotation
+	var y_sensitivity = cons.Y_SENS
+	var x_rotation
+	var x_sensitivity = cons.X_SENS
 
-	rotate_y(yRotation)
-	$Camera3D.rotate_x(xRotation)
+	if sword_state == SwordState.SWING:
+		y_sensitivity *= cons.TURN_CAP
+		x_sensitivity *= cons.TURN_CAP
+
+	y_rotation = -event.relative.x * x_sensitivity
+	x_rotation = -event.relative.y * y_sensitivity
+
+	rotate_y(y_rotation)
+	$Camera3D.rotate_x(x_rotation)
 	
 	mouse_movement_angle = event.relative
 
+
 func _start_idle():
 	$AnimationPlayer.play("idle")
+
 
 func _start_windup():
 	sword_state = SwordState.WINDUP
 	$AnimationPlayer.stop()
 	
-	swingRotations = calc_swing(mouse_movement_angle)
-	windupRotations = calc_windup(swingRotations["start"])
+	swing_rotations = _calc_swing(mouse_movement_angle)
+	windup_basis = _calc_windup(swing_rotations["start"])
 	windup_timer = 0
+
 
 func _start_swing():
 	sword_state = SwordState.SWING
-	$AnimationPlayer.stop()
-	
-	swingRotations = calc_swing(mouse_movement_angle) # remove when windup is working
+
 	swing_timer = 0
+
+
+func _start_pullback():
+	sword_state = SwordState.PULLBACK
+	
+	pullback_basis = _calc_pullback()
+	pullback_timer = 0
+
+
+func _slerp_windup(delta):
+	windup_timer += delta
+	var progress = clamp(windup_timer / cons.WINDUP_TIME, 0.0, 1.0)
+	
+	%WeaponPivot.basis = windup_basis["start"].slerp(windup_basis["end"], progress)
+	
+	if progress >= 1.0:
+		windup_timer = 0
+		_start_swing()
 
 
 func _slerp_swing(delta):
@@ -151,27 +176,53 @@ func _slerp_swing(delta):
 	# hey dumbass, progress' scaling means that swing_curve.sample(progress) has very little weight at the start
 	
 	%WeaponPivot.quaternion = (
-			swingRotations["start"].slerp(swingRotations["end"],
-			min(1.0, current_rotation / swingRotations["start"].angle_to(swingRotations["end"]))))
+			swing_rotations["start"].slerp(swing_rotations["end"],
+			min(1.0, current_rotation / swing_rotations["start"].angle_to(swing_rotations["end"]))))
 	
 	if progress >= 1.0:
 		swing_timer = 0
+		_start_pullback()
+
+
+func _slerp_pullback(delta):
+	pullback_timer += delta
+	var progress = clamp(pullback_timer / cons.PULLBACK_TIME, 0.0, 1.0)
+	
+	%WeaponPivot.basis = pullback_basis["start"].slerp(pullback_basis["end"], progress)
+
+	if progress >= 1.0:
+		pullback_timer = 0
 		sword_state = SwordState.IDLE
 
 
-func calc_swing(screenAngle):
-	var swingDirection = Quaternion(Vector3.FORWARD, screenAngle.angle() - PI/2)
-	swingDirection = swingDirection.normalized()
+func _calc_windup(startQuaternion):
+	var windup_start: Basis = %WeaponPivot.basis
 	
-	var swingStart = swingDirection*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_START_ROTATIION)
-	swingStart = swingStart.normalized()
-	
-	var swingEnd = swingDirection*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_END_ROTATIION)
-	swingEnd = swingEnd.normalized()
-	
-	return {"start": swingStart, "end": swingEnd}
+	var windup_end := Basis(startQuaternion)
+
+	return {"start": windup_start, "end": windup_end}
 
 
-func calc_windup(startQuaternion):
-	pass
-	#return {"start": windup_start, "end": windup_end}
+func _calc_swing(screenAngle):
+	var swing_direction = Quaternion(Vector3.FORWARD, screenAngle.angle() - PI/2)
+	swing_direction = swing_direction.normalized()
+	
+	var swing_start = swing_direction*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_START_ROTATIION)
+	swing_start = swing_start.normalized()
+	
+	var swing_end = swing_direction*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_END_ROTATIION)
+	swing_end = swing_end.normalized()
+	
+	return {"start": swing_start, "end": swing_end}
+
+
+func _calc_pullback():
+	var pullback_start = %WeaponPivot.basis
+	
+	# kinda fucking scuffed
+	var idle_animation = animation_library.get_animation("idle")
+	var pullback_pos := Basis(idle_animation.track_get_key_value(0, 0), 0.0)
+	var pullback_rot: Vector3 = idle_animation.track_get_key_value(1, 0)
+	var pullback_end = pullback_pos.from_euler(pullback_rot)
+	
+	return {"start": pullback_start, "end": pullback_end}
