@@ -97,7 +97,6 @@ func _process(delta):
 			_slerp_windup(delta)
 		SwordState.SWING:
 			_slerp_swing(delta)
-			_detect_hits()
 		SwordState.PULLBACK:
 			_slerp_pullback(delta)
 		SwordState.STAB:
@@ -245,31 +244,3 @@ func _get_idle_start():
 	var idle_end = idle_pos.from_euler(idle_rot)
 	
 	return idle_end
-
-
-func hitstop():
-	pass
-	
-	#Engine.time_scale = cons.HITSTOP_DURATION
-	#Engine.time_scale = 1
-
-
-func _detect_hits():
-	# you didnt see shit
-	if $Camera3D/WeaponPivot/TipCast.is_colliding() or $Camera3D/WeaponPivot/MidCast.is_colliding() or $Camera3D/WeaponPivot/BaseCast.is_colliding():
-		$Timers/HitstopCooldown.start()
-		$Timers/HitstopDuration.start()
-		Engine.set_time_scale(cons.HITSTOP_SCALE)
-		$Camera3D/WeaponPivot/TipCast.enabled = false
-		$Camera3D/WeaponPivot/MidCast.enabled = false
-		$Camera3D/WeaponPivot/BaseCast.enabled = false
-
-
-func _on_hitstop_cooldown_timeout():
-	$Camera3D/WeaponPivot/TipCast.enabled = true
-	$Camera3D/WeaponPivot/MidCast.enabled = true
-	$Camera3D/WeaponPivot/BaseCast.enabled = true
-
-
-func _on_hitstop_duration_timeout():
-	Engine.set_time_scale(1)
