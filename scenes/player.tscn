@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cym4x58rxf7qy"]
+[gd_scene load_steps=13 format=3 uid="uid://cym4x58rxf7qy"]
 
 [ext_resource type="Script" uid="uid://bb030veembnn5" path="res://scripts/player.gd" id="1_y0qk3"]
 [ext_resource type="PackedScene" uid="uid://dsjsdysjwu4qt" path="res://art/models/model_packages/test_sword.glb" id="3_dqkch"]
-[ext_resource type="AnimationLibrary" uid="uid://b3gg5iabe51d7" path="res://art/animation_libs/idle_lib.tres" id="4_qlg0r"]
 
 [sub_resource type="Curve" id="Curve_qhqgy"]
 _data = [Vector2(0, 0.1685394), 0.0, 0.07211134, 0, 0, Vector2(0.6325581, 0.39325845), 1.0468166, 1.0468166, 0, 0, Vector2(1, 1), 1.8252184, 0.0, 0, 0]
@@ -35,11 +34,88 @@ func calc_swing(screenAngle):
 	return {\"start\": swingStart, \"end\": swingEnd}
 "
 
+[sub_resource type="SphereMesh" id="SphereMesh_qhqgy"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dqkch"]
+
+[sub_resource type="Animation" id="Animation_g2els"]
+resource_name = "sword_animations"
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+resource_name = "swing"
+length = 2.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0.7853982, -0.25, 0, 0.25, 0, -0.9599311, -0.33333334, 0.29088822, 0, 0),
+"times": PackedFloat32Array(0, 2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0.7853982, -0.25, 0, 0.25, 0, 0, -0.33333334, 0.1308997, 0, 0),
+"times": PackedFloat32Array(0, 2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0.08726646, -0.25, 0, 0.25, 0, -1.3962634, -0.33333334, 0.24725497, 0, 0),
+"times": PackedFloat32Array(0, 2)
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.9599311, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.3962634, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
+_data = {
+&"RESET": SubResource("Animation_dqkch"),
+&"swing": SubResource("Animation_qhqgy"),
+&"sword_animations": SubResource("Animation_g2els")
+}
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_y0qk3")
 swing_curve = SubResource("Curve_qhqgy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_ojbdc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -50,15 +126,54 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.661619, 0)
 fov = 85.0
 script = SubResource("GDScript_qhqgy")
 
-[node name="WeaponPivot" type="Node3D" parent="Camera3D"]
+[node name="Reference" type="Node3D" parent="Camera3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0.46126786, -0.5537075, -0.727506)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.292, -0.034)
 
-[node name="PlayerWeapon" parent="Camera3D/WeaponPivot" instance=ExtResource("3_dqkch")]
-transform = Transform3D(0.1, 0, 0, 0, 0.10000006, 0, 0, 0, 0.10000006, -0.0060638785, 0.22135475, -0.010177404)
+[node name="Shoulder" type="Node3D" parent="Camera3D/Reference"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.5735764, 0.819152, 0, -0.819152, 0.5735764, 0, 0, 0)
+
+[node name="joint" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_qhqgy")
+
+[node name="bone" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder"]
+transform = Transform3D(0.05, 0, 0, 0, -8.742278e-09, 0.05, 0, -0.2, -2.1855695e-09, 0, 0, -0.2)
+visible = false
+mesh = SubResource("CylinderMesh_dqkch")
+
+[node name="Elbow" type="Node3D" parent="Camera3D/Reference/Shoulder"]
+transform = Transform3D(1, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 0, -0.4)
+
+[node name="joint" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_qhqgy")
+
+[node name="bone" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow"]
+transform = Transform3D(0.05, 0, 0, 0, -8.742278e-09, 0.05, 0, -0.2, -2.1855695e-09, 0, 0, -0.2)
+visible = false
+mesh = SubResource("CylinderMesh_dqkch")
+
+[node name="Wrist" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow"]
+transform = Transform3D(1, 0, 0, 0, 0.17364822, 0.9848077, 0, -0.9848077, 0.17364822, 0, 0, -0.4)
+
+[node name="joint" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_qhqgy")
+
+[node name="bone" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
+transform = Transform3D(0.05, 0, 0, 0, -2.1855695e-09, 0.05, 0, -0.05, -2.1855695e-09, 0, 0, -0.05)
+visible = false
+mesh = SubResource("CylinderMesh_dqkch")
+
+[node name="Weapon" parent="Camera3D/Reference/Shoulder/Elbow/Wrist" instance=ExtResource("3_dqkch")]
+transform = Transform3D(0.2, 0, 0, 0, 0.19999999, 0, 0, 0, 0.19999999, 0, -0.11442837, -0.1088174)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": ExtResource("4_qlg0r")
+&"": SubResource("AnimationLibrary_qlg0r")
 }
-autoplay = "idle"

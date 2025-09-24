@@ -92,12 +92,18 @@ func _process(delta):
 	
 	match sword_state:
 		SwordState.IDLE:
+			pass
 			_start_idle()
 		SwordState.WINDUP:
+			pass
 			_slerp_windup(delta)
 		SwordState.SWING:
+			_animate_swing()
+			pass
 			_slerp_swing(delta)
+			
 		SwordState.PULLBACK:
+			pass
 			_slerp_pullback(delta)
 		SwordState.STAB:
 			pass
@@ -158,15 +164,21 @@ func _get_mouse_movement():
 
 
 func _start_idle():
-	$AnimationPlayer.play("idle")
+	pass
+	#$AnimationPlayer.play("idle")
 
 
 func _start_windup():
-	sword_state = SwordState.WINDUP
-	$AnimationPlayer.stop()
+	%Reference.set_rotation(Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
+	$AnimationPlayer.play("swing")
 	
-	attack_transitions = _calc_attack(mouse_movement_angle)
-	swing_timer = 0
+	
+	
+	#sword_state = SwordState.WINDUP
+	#$AnimationPlayer.stop()
+	#
+	#attack_transitions = _calc_attack(mouse_movement_angle)
+	#swing_timer = 0
 
 
 func _start_swing():
@@ -224,7 +236,7 @@ func _slerp_pullback(delta):
 func _calc_attack(mouse_angle):
 	var windup_start: Basis = %WeaponPivot.basis
 	
-	var swing_direction = Quaternion(Vector3.FORWARD, mouse_angle.angle() - PI/2)
+	var swing_direction = Quaternion(Vector3.FORWARD, (mouse_angle - PI/2).angle())
 	swing_direction = swing_direction.normalized()
 	
 	var swing_start = Basis(swing_direction*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_START_ROTATIION))
@@ -244,3 +256,7 @@ func _get_idle_start():
 	var idle_end = idle_pos.from_euler(idle_rot)
 	
 	return idle_end
+
+
+func _animate_swing():
+	pass
