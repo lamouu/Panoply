@@ -32,11 +32,7 @@ var attack_transitions : Dictionary
 var swing_timer := 0.0
 var mouse_timer := 0.0
 
-var raycast_array := [
-	$Camera3D/WeaponPivot/TipCast,
-	$Camera3D/WeaponPivot/MidCast,
-	$Camera3D/WeaponPivot/BaseCast,
-]
+var swinging = false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -90,21 +86,22 @@ func _process(delta):
 	
 	mouse_movement_angle = _get_mouse_movement()
 	
+	print(%Reference.rotation_degrees)
 	match sword_state:
 		SwordState.IDLE:
 			pass
-			_start_idle()
+			#_start_idle()
 		SwordState.WINDUP:
 			pass
-			_slerp_windup(delta)
+			#_slerp_windup(delta)
 		SwordState.SWING:
-			_animate_swing()
+			#_animate_swing()
 			pass
-			_slerp_swing(delta)
+			#_slerp_swing(delta)
 			
 		SwordState.PULLBACK:
 			pass
-			_slerp_pullback(delta)
+			#_slerp_pullback(delta)
 		SwordState.STAB:
 			pass
 		SwordState.PARRY:
@@ -119,14 +116,38 @@ func _unhandled_input(event):
 		mouse_movement_angle = event.screen_relative
 
 	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT and sword_state == SwordState.IDLE:
-		_start_windup()
+		#%Reference.set_rotation(Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
+		var state_machine = $AnimationTree["parameters/playback"]
+		
+		# set reference rotation for end of windup and start of winddown
+		#$AnimationPlayer.get_animation("windup").track_set_key_value(5, 0, Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
+		
+		var swingAngle = Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle())
+		$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle)
+		$AnimationPlayer.get_animation("windup").track_set_key_transition(3, 1, 100)
+		#$AnimationPlayer.get_animation("winddown").track_set_key_value(3, 0, swingAngle)
+		
+		#if swingAngle[2] >= 0 and swingAngle[2] <= PI:
+			#$AnimationPlayer.get_animation("winddown").track_set_key_value(3, 0, deg_to_rad(-50))
+		#else:
+			#$AnimationPlayer.get_animation("winddown").track_set_key_value(3, 0, deg_to_rad(50))
+		
+		#sword_state = SwordState.SWING
+		
+		state_machine.travel("swinger")
+		
 
+func rotate_arm():
+	#%Reference.set_rotation(Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
+	#$AnimationPlayer.get_animation("swing").track_set_key_value(5, 0, Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
+	pass
 
 func _headbob(time):
 	var pos = Vector3.ZERO
 	pos.y = sin(time * cons.BOB_FREQUENCY) * cons.BOB_AMPLITUDE
 	pos.x = cos(time * cons.BOB_FREQUENCY / 2) * cons.BOB_AMPLITUDE / 2
 	return pos
+
 
 
 func _move_camera(event):
@@ -170,11 +191,10 @@ func _start_idle():
 
 func _start_windup():
 	%Reference.set_rotation(Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
-	$AnimationPlayer.play("swing")
 	
 	
 	
-	#sword_state = SwordState.WINDUP
+	sword_state = SwordState.WINDUP
 	#$AnimationPlayer.stop()
 	#
 	#attack_transitions = _calc_attack(mouse_movement_angle)
