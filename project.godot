@@ -17,6 +17,11 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 [autoload]
 
 cons="*res://scripts/simpletons/const.gd"
+DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg")
 
 [file_customization]
 
