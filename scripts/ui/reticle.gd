@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func _input(event):
 	if event is InputEventMouseMotion and event.relative != null:
-		var sum: Vector2
+		var sum := Vector2.ZERO
 		
 		mouse_movement_array.push_front(event.screen_relative)
 		mouse_movement_array.resize(cons.ANGLE_BUFFER)
