@@ -1,4 +1,7 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=10 format=3 uid="uid://xop57qnujvw0"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=14 format=3 uid="uid://xop57qnujvw0"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nih54"]
+animation = &"combo"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g2els"]
 animation = &"idle"
@@ -29,16 +32,28 @@ advance_mode = 2
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7hfqk"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8lds2"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8stco"]
+xfade_time = 0.7
+
 [resource]
 states/End/position = Vector2(958, 147)
-states/Start/position = Vector2(258, 147)
+states/Start/position = Vector2(266, 211)
+states/combo/node = SubResource("AnimationNodeAnimation_nih54")
+states/combo/position = Vector2(715, 82)
 states/idle/node = SubResource("AnimationNodeAnimation_g2els")
-states/idle/position = Vector2(374, 147)
+states/idle/position = Vector2(382, 211)
 states/swinger/node = SubResource("AnimationNodeAnimation_afd25")
-states/swinger/position = Vector2(603, 78)
+states/swinger/position = Vector2(611, 142)
 states/winddown/node = SubResource("AnimationNodeAnimation_ciry2")
-states/winddown/position = Vector2(649, 145)
+states/winddown/position = Vector2(715, 211)
 states/windup/node = SubResource("AnimationNodeAnimation_8lds2")
-states/windup/position = Vector2(479, 78)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qhqgy"), "idle", "windup", SubResource("AnimationNodeStateMachineTransition_ciry2"), "windup", "swinger", SubResource("AnimationNodeStateMachineTransition_afd25"), "swinger", "winddown", SubResource("AnimationNodeStateMachineTransition_nih54"), "winddown", "idle", SubResource("AnimationNodeStateMachineTransition_ynlkn")]
+states/windup/position = Vector2(487, 142)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qhqgy"), "idle", "windup", SubResource("AnimationNodeStateMachineTransition_ciry2"), "windup", "swinger", SubResource("AnimationNodeStateMachineTransition_afd25"), "swinger", "winddown", SubResource("AnimationNodeStateMachineTransition_nih54"), "winddown", "idle", SubResource("AnimationNodeStateMachineTransition_ynlkn"), "swinger", "combo", SubResource("AnimationNodeStateMachineTransition_7hfqk"), "combo", "swinger", SubResource("AnimationNodeStateMachineTransition_8lds2"), "winddown", "combo", SubResource("AnimationNodeStateMachineTransition_8stco")]
 graph_offset = Vector2(-55, -13)

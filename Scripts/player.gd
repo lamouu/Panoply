@@ -6,6 +6,8 @@ var player_speed : float
 var headbob_t := 0.0
 var	mouse_movement_angle : Vector2
 var mouse_movement_array : Array
+var last_swing_angle := 0.0
+var comboing := false
 
 
 func _ready():
@@ -67,18 +69,41 @@ func _unhandled_input(event):
 		mouse_movement_angle = event.screen_relative
 
 	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT:
-		if state_machine.get_current_node() == "idle":
-			var swingAngle = Vector3(0.0, 0.0, - PI/2 - mouse_movement_angle.angle())
-			print(rad_to_deg(swingAngle[2]))
-			if swingAngle[2] >= deg_to_rad(-271) and swingAngle[2] <= deg_to_rad(-180):
-				$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle + Vector3(0,0,2 * PI))
-				$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle + Vector3(0,0,2 * PI))
-			else:
-				$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle)
-				$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle)
-			
-			state_machine.travel("swinger")
+		var current_swing_angle: float = rad_to_deg(mouse_movement_angle.angle())
+		_set_swing_params()
 		
+		match state_machine.get_current_node():
+			"idle":
+				state_machine.travel("winddown")
+			"swinger":
+				if last_swing_angle - 90 < -180:
+					last_swing_angle = last_swing_angle + 360
+				elif last_swing_angle + 90 > 180:
+					last_swing_angle = last_swing_angle - 360
+				
+				print("\ncurrent_swing_angle: ", current_swing_angle, "\nlast_swing_angle: ", last_swing_angle, "\nlast_swing_angle - 90: ", last_swing_angle - 90, "\nlast_swing_angle + 90: ", last_swing_angle + 90)
+				#print(current_swing_angle)
+				
+				if current_swing_angle > last_swing_angle - 90 and current_swing_angle < last_swing_angle + 90:
+					state_machine.travel("combo")
+			"winddown":
+				pass
+				#state_machine.travel("combo") # enable to let the player combo during winddown
+		
+		last_swing_angle = rad_to_deg(mouse_movement_angle.angle())
+
+
+func _set_swing_params():
+	var swingAngle = Vector3(0.0, 0.0, - PI/2 - mouse_movement_angle.angle())
+
+	if swingAngle[2] >= deg_to_rad(-271) and swingAngle[2] <= deg_to_rad(-180):
+		$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle + Vector3(0,0,2 * PI))
+		$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle + Vector3(0,0,2 * PI))
+		$AnimationPlayer.get_animation("combo").track_set_key_value(4, 0, swingAngle + Vector3(0,0,2 * PI))
+	else:
+		$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle)
+		$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle)
+		$AnimationPlayer.get_animation("combo").track_set_key_value(4, 0, swingAngle)
 
 
 func _headbob(time):

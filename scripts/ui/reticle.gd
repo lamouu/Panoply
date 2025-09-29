@@ -13,15 +13,13 @@ func _ready() -> void:
 
 func _input(event):
 	if event is InputEventMouseMotion and event.relative != null:
-		var sum := Vector2.ZERO
-		
 		mouse_movement_array.push_front(event.screen_relative)
 		mouse_movement_array.resize(cons.ANGLE_BUFFER)
-	
+		
+		var sum := Vector2.ZERO
 		for i in cons.ANGLE_BUFFER:
 			sum += mouse_movement_array[i]
 		
-
 		$DirectionIndicator.set_rotation(sum.angle() + PI/2)
 
 func _draw():
