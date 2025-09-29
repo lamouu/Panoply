@@ -1,38 +1,12 @@
 extends CharacterBody3D
 
-enum SwordState {
-	IDLE,
-	WINDUP,
-	SWING,
-	PULLBACK,
-	STAB,
-	PARRY,
-	FLOURISH,
-}
+@onready var state_machine = $AnimationTree["parameters/playback"]
 
-# sword animation curves
-@export var windup_curve: Curve
-@export var swing_curve: Curve
-@export var pullback_curve: Curve
-@export var stab_curve: Curve
-
-# movement variables
 var player_speed : float
 var headbob_t := 0.0
-
-# animation variables
-var animation_library : AnimationLibrary = load("res://art/animation_libs/idle_lib.tres")
-
-# sword variables
-var sword_state := SwordState.IDLE
 var	mouse_movement_angle : Vector2
 var mouse_movement_array : Array
-var mordhau := false
-var attack_transitions : Dictionary
-var swing_timer := 0.0
-var mouse_timer := 0.0
 
-var swinging = false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -80,34 +54,11 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("escape"):
 		get_tree().quit()
 	
 	mouse_movement_angle = _get_mouse_movement()
-	
-	print(%Reference.rotation_degrees)
-	match sword_state:
-		SwordState.IDLE:
-			pass
-			#_start_idle()
-		SwordState.WINDUP:
-			pass
-			#_slerp_windup(delta)
-		SwordState.SWING:
-			#_animate_swing()
-			pass
-			#_slerp_swing(delta)
-			
-		SwordState.PULLBACK:
-			pass
-			#_slerp_pullback(delta)
-		SwordState.STAB:
-			pass
-		SwordState.PARRY:
-			pass
-		SwordState.FLOURISH:
-			pass
 
 
 func _unhandled_input(event):
@@ -115,39 +66,27 @@ func _unhandled_input(event):
 		_move_camera(event)
 		mouse_movement_angle = event.screen_relative
 
-	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT and sword_state == SwordState.IDLE:
-		#%Reference.set_rotation(Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
-		var state_machine = $AnimationTree["parameters/playback"]
-		
-		# set reference rotation for end of windup and start of winddown
-		#$AnimationPlayer.get_animation("windup").track_set_key_value(5, 0, Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
-		
-		var swingAngle = Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle())
-		$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle)
-		$AnimationPlayer.get_animation("windup").track_set_key_transition(3, 1, 100)
-		#$AnimationPlayer.get_animation("winddown").track_set_key_value(3, 0, swingAngle)
-		
-		#if swingAngle[2] >= 0 and swingAngle[2] <= PI:
-			#$AnimationPlayer.get_animation("winddown").track_set_key_value(3, 0, deg_to_rad(-50))
-		#else:
-			#$AnimationPlayer.get_animation("winddown").track_set_key_value(3, 0, deg_to_rad(50))
-		
-		#sword_state = SwordState.SWING
-		
-		state_machine.travel("swinger")
+	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT:
+		if state_machine.get_current_node() == "idle":
+			var swingAngle = Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle())
+			
+			if swingAngle[2] >= deg_to_rad(180) and swingAngle[2] <= deg_to_rad(270):
+				$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle - Vector3(0,0,2 * PI))
+				$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle - Vector3(0,0,2 * PI))
+			else:
+				$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle)
+				$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle)
+			
+			state_machine.travel("swinger")
 		
 
-func rotate_arm():
-	#%Reference.set_rotation(Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
-	#$AnimationPlayer.get_animation("swing").track_set_key_value(5, 0, Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
-	pass
+
 
 func _headbob(time):
 	var pos = Vector3.ZERO
 	pos.y = sin(time * cons.BOB_FREQUENCY) * cons.BOB_AMPLITUDE
 	pos.x = cos(time * cons.BOB_FREQUENCY / 2) * cons.BOB_AMPLITUDE / 2
 	return pos
-
 
 
 func _move_camera(event):
@@ -158,8 +97,8 @@ func _move_camera(event):
 
 	y_rotation = -event.relative.x * x_sensitivity
 	x_rotation = -event.relative.y * y_sensitivity
-	
-	if sword_state == SwordState.SWING or sword_state == SwordState.WINDUP:
+
+	if state_machine.get_current_node() == "swinger" or state_machine.get_current_node() == "winddown":
 		y_rotation = clamp(y_rotation, - cons.TURN_CAP, cons.TURN_CAP)
 		x_rotation = clamp(x_rotation, - cons.TURN_CAP, cons.TURN_CAP)
 	else:
@@ -182,101 +121,3 @@ func _get_mouse_movement():
 			sum += mouse_movement_array[i]
 		
 	return sum
-
-
-func _start_idle():
-	pass
-	#$AnimationPlayer.play("idle")
-
-
-func _start_windup():
-	%Reference.set_rotation(Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle()))
-	
-	
-	
-	sword_state = SwordState.WINDUP
-	#$AnimationPlayer.stop()
-	#
-	#attack_transitions = _calc_attack(mouse_movement_angle)
-	#swing_timer = 0
-
-
-func _start_swing():
-	sword_state = SwordState.SWING
-
-	swing_timer = 0
-
-
-func _start_pullback():
-	sword_state = SwordState.PULLBACK
-	
-	swing_timer = 0
-
-
-func _slerp_windup(delta):
-	swing_timer += delta
-	var progress = clamp(swing_timer / cons.WINDUP_TIME, 0.0, 1.0)
-	
-	%WeaponPivot.basis = attack_transitions["windup_start"].slerp(attack_transitions["swing_start"], progress)
-	
-	if progress >= 1.0:
-		swing_timer = 0
-		_start_swing()
-
-
-func _slerp_swing(delta):
-	swing_timer += delta
-	var progress = clamp(swing_timer / cons.SWING_TIME, 0.0, 1.0)
-	var swing_angle = cons.SWING_END_ROTATIION - cons.SWING_START_ROTATIION
-	var current_rotation = swing_angle * progress * swing_curve.sample(progress)
-	# hey dumbass, progress' scaling means that swing_curve.sample(progress) has very little weight at the start
-	
-	%WeaponPivot.quaternion = (
-			attack_transitions["swing_start"].slerp(attack_transitions["pullback_start"],
-			min(1.0, current_rotation / attack_transitions["swing_start"].
-			get_rotation_quaternion().angle_to(attack_transitions["pullback_start"].get_rotation_quaternion())))
-			)
-	
-	if progress >= 1.0:
-		swing_timer = 0
-		_start_pullback()
-
-
-func _slerp_pullback(delta):
-	swing_timer += delta
-	var progress = clamp(swing_timer / cons.PULLBACK_TIME, 0.0, 1.0)
-	
-	%WeaponPivot.basis = attack_transitions["pullback_start"].slerp(attack_transitions["idle_start"], progress)
-
-	if progress >= 1.0:
-		swing_timer = 0
-		sword_state = SwordState.IDLE
-
-
-func _calc_attack(mouse_angle):
-	var windup_start: Basis = %WeaponPivot.basis
-	
-	var swing_direction = Quaternion(Vector3.FORWARD, (mouse_angle - PI/2).angle())
-	swing_direction = swing_direction.normalized()
-	
-	var swing_start = Basis(swing_direction*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_START_ROTATIION))
-	
-	var pullback_start = Basis(swing_direction*Quaternion(Vector3.MODEL_RIGHT, cons.SWING_END_ROTATIION))
-	
-	var idle_start = _get_idle_start()
-	
-	return {"windup_start": windup_start, "swing_start": swing_start, "pullback_start": pullback_start, "idle_start": idle_start}
-
-
-func _get_idle_start():
-	var idle_animation = animation_library.get_animation("idle")
-	var idle_pos := Basis(idle_animation.track_get_key_value(0, 0), 0.0)
-	var idle_rot: Vector3 = idle_animation.track_get_key_value(1, 0)
-	@warning_ignore("static_called_on_instance")
-	var idle_end = idle_pos.from_euler(idle_rot)
-	
-	return idle_end
-
-
-func _animate_swing():
-	pass
