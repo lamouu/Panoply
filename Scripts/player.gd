@@ -64,7 +64,7 @@ func _process(_delta):
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		_move_camera(event)
-		mouse_movement_angle = - event.screen_relative
+		mouse_movement_angle = event.screen_relative
 
 	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT:
 		if state_machine.get_current_node() == "idle":
