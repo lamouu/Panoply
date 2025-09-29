@@ -68,11 +68,11 @@ func _unhandled_input(event):
 
 	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT:
 		if state_machine.get_current_node() == "idle":
-			var swingAngle = Vector3(0.0, 0.0, PI/2 - mouse_movement_angle.angle())
-			
-			if swingAngle[2] >= deg_to_rad(180) and swingAngle[2] <= deg_to_rad(270):
-				$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle - Vector3(0,0,2 * PI))
-				$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle - Vector3(0,0,2 * PI))
+			var swingAngle = Vector3(0.0, 0.0, - PI/2 - mouse_movement_angle.angle())
+			print(rad_to_deg(swingAngle[2]))
+			if swingAngle[2] >= deg_to_rad(-271) and swingAngle[2] <= deg_to_rad(-180):
+				$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle + Vector3(0,0,2 * PI))
+				$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle + Vector3(0,0,2 * PI))
 			else:
 				$AnimationPlayer.get_animation("windup").track_set_key_value(3, 1, swingAngle)
 				$AnimationPlayer.get_animation("winddown").track_set_key_value(4, 0, swingAngle)
