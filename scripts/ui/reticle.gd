@@ -42,11 +42,11 @@ func _change_transparency(animation):
 	$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.0)
 	match animation:
 		"windup":
-			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.25)
-			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.25)
+			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.5)
+			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.5)
 		"combo":
-			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.25)
-			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.25)
+			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.5)
+			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.5)
 		"swinger":
 			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.5)
 			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.5)
