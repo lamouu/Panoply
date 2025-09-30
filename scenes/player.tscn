@@ -228,7 +228,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_dqkch"]
 resource_name = "swinger"
-length = 0.8
+length = 1.5
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -237,8 +237,8 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(1.3962634, 0, 0, 0.3, -3.7035398, -1.7453293, -0.13333333, 0.19260895, 0, 0),
-"times": PackedFloat32Array(0, 0.8)
+"points": PackedFloat32Array(1.3962634, 0, 0, 0.3, -3.7035398, -1.7453293, -1.0666666, 0.32866514, 0, 0),
+"times": PackedFloat32Array(0, 1.5)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -249,7 +249,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0.7853982, 0, 0, 0.16666667, -1.1171094, 0, -0.36666673, 0.17139369, 0, 0),
-"times": PackedFloat32Array(0, 0.8)
+"times": PackedFloat32Array(0, 1.5)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
@@ -260,7 +260,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0.08726646, -0.25, 0, 0.2, -1.3107258, -1.5160682, -0.33333337, 0.044825673, 0, 0),
-"times": PackedFloat32Array(0, 0.8)
+"times": PackedFloat32Array(0, 1.5)
 }
 tracks/3/type = "value"
 tracks/3/imported = false
