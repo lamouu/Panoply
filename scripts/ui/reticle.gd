@@ -30,26 +30,20 @@ func _input(event):
 		$DirectionIndicator.set_rotation(mouse_angle.angle() + PI/2)
 	
 	if event is InputEventMouseButton and event.is_pressed() and mouse_angle != null and mouse_angle.angle() != null and event.button_index == MOUSE_BUTTON_LEFT:
-		$ComboIndicatorL.set_rotation(mouse_angle.angle() + PI/2 - deg_to_rad(120))
-		$ComboIndicatorR.set_rotation(mouse_angle.angle() + PI/2 + deg_to_rad(120))
+		$ComboIndicator.set_rotation(mouse_angle.angle() + 3 * PI / 2)
 		
-		$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.0)
-		$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.0)
+		$ComboIndicator.modulate = Color(1.0, 1.0, 1.0, 0.0)
 
 		
 func _change_transparency(animation):
-	$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.0)
-	$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.0)
+	$ComboIndicator.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	match animation:
 		"windup":
-			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.5)
-			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.5)
+			$ComboIndicator.modulate = Color(1.0, 1.0, 1.0, 0.5)
 		"combo":
-			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.5)
-			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.5)
+			$ComboIndicator.modulate = Color(1.0, 1.0, 1.0, 0.5)
 		"swinger":
-			$ComboIndicatorL.default_color = Color(1.0, 1.0, 1.0, 0.5)
-			$ComboIndicatorR.default_color = Color(1.0, 1.0, 1.0, 0.5)
+			$ComboIndicator.modulate = Color(1.0, 1.0, 1.0, 0.5)
 
 func _draw():
 	draw_circle(Vector2(0,0), DOT_RADIUS, DOT_COLOUR)
