@@ -75,9 +75,6 @@ func _unhandled_input(event):
 			"idle":
 				_set_swing_params()
 				state_machine.travel("windup")
-			"windup":
-				_set_swing_params()
-				_combo(current_swing_angle)
 			"swinger":
 				_set_swing_params()
 				_combo(current_swing_angle)
@@ -92,13 +89,13 @@ func _combo(current_swing_angle):
 	var left_bound = normalize_rotation(last_swing_angle - 120)
 	var right_bound = normalize_rotation(last_swing_angle + 120)
 	
-	print("\ncurrent_swing_angle: ", current_swing_angle, "\nleft_bound: ", left_bound, "\nright_bound: ", right_bound)
+	#print("\ncurrent_swing_angle: ", current_swing_angle, "\nleft_bound: ", left_bound, "\nright_bound: ", right_bound)
 	
 	# scuffed as shit, will fix one day
 	var in_range_left = -181 > current_swing_angle and current_swing_angle > left_bound
 	var in_range_right = 181 > current_swing_angle and current_swing_angle > right_bound
 	if in_range_left or in_range_right:
-		print("fired")
+		#print("fired")
 		state_machine.travel("combo")
 
 func normalize_rotation(angle):
