@@ -83,8 +83,8 @@ func _unhandled_input(event):
 				print("\ncurrent_swing_angle: ", current_swing_angle, "\nleft_bound: ", left_bound, "\nright_bound: ", right_bound)
 				
 				# scuffed as shit, will fix one day
-				var in_range_left = -180 > current_swing_angle and current_swing_angle > left_bound
-				var in_range_right = 180 > current_swing_angle and current_swing_angle > right_bound
+				var in_range_left = -181 > current_swing_angle and current_swing_angle > left_bound
+				var in_range_right = 181 > current_swing_angle and current_swing_angle > right_bound
 				if in_range_left or in_range_right:
 					print("fired")
 					state_machine.travel("combo")
