@@ -19,10 +19,6 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 cons="*res://scripts/simpletons/const.gd"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
-[display]
-
-window/size/mode=3
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg")
