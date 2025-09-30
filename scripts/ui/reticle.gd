@@ -1,6 +1,6 @@
 extends CenterContainer
 
-@export var DOT_RADIUS: float = 1.5
+@export var DOT_RADIUS: float = 2.0
 @export var DOT_COLOUR: Color = Color.WHITE
 @onready var animation_player = $"../../Player/AnimationTree"
 
