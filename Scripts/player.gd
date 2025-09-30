@@ -70,28 +70,30 @@ func _unhandled_input(event):
 
 	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT:
 		var current_swing_angle: float = rad_to_deg(mouse_movement_angle.angle())
-		_set_swing_params()
 		
 		match state_machine.get_current_node():
 			"idle":
-				state_machine.travel("winddown")
+				_set_swing_params()
+				state_machine.travel("windup")
 			"swinger":
-				if last_swing_angle - 90 < -180:
-					last_swing_angle = last_swing_angle + 360
-				elif last_swing_angle + 90 > 180:
-					last_swing_angle = last_swing_angle - 360
+				_set_swing_params()
+				var left_bound = normalize_rotation(last_swing_angle - 120)
+				var right_bound = normalize_rotation(last_swing_angle + 120)
 				
-				print("\ncurrent_swing_angle: ", current_swing_angle, "\nlast_swing_angle: ", last_swing_angle, "\nlast_swing_angle - 90: ", last_swing_angle - 90, "\nlast_swing_angle + 90: ", last_swing_angle + 90)
-				#print(current_swing_angle)
-				
-				if current_swing_angle > last_swing_angle - 90 and current_swing_angle < last_swing_angle + 90:
+				if current_swing_angle < left_bound and current_swing_angle > right_bound:
 					state_machine.travel("combo")
 			"winddown":
 				pass
-				#state_machine.travel("combo") # enable to let the player combo during winddown
 		
 		last_swing_angle = rad_to_deg(mouse_movement_angle.angle())
 
+func normalize_rotation(angle):
+	if angle < -180:
+		angle = angle + 360
+	elif angle + 120 > 180:
+		angle = angle - 360
+	
+	return angle
 
 func _set_swing_params():
 	var swingAngle = Vector3(0.0, 0.0, - PI/2 - mouse_movement_angle.angle())

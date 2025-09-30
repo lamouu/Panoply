@@ -56,4 +56,4 @@ states/winddown/position = Vector2(715, 211)
 states/windup/node = SubResource("AnimationNodeAnimation_8lds2")
 states/windup/position = Vector2(487, 142)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qhqgy"), "idle", "windup", SubResource("AnimationNodeStateMachineTransition_ciry2"), "windup", "swinger", SubResource("AnimationNodeStateMachineTransition_afd25"), "swinger", "winddown", SubResource("AnimationNodeStateMachineTransition_nih54"), "winddown", "idle", SubResource("AnimationNodeStateMachineTransition_ynlkn"), "swinger", "combo", SubResource("AnimationNodeStateMachineTransition_7hfqk"), "combo", "swinger", SubResource("AnimationNodeStateMachineTransition_8lds2"), "winddown", "combo", SubResource("AnimationNodeStateMachineTransition_8stco")]
-graph_offset = Vector2(-55, -13)
+graph_offset = Vector2(-55, 29)

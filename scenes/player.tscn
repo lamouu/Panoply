@@ -447,6 +447,7 @@ tree_root = ExtResource("2_qhqgy")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_qlg0r")
 }
