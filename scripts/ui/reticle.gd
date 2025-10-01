@@ -29,10 +29,10 @@ func _input(event):
 		
 		mouse_angle = sum
 		
-		$DirectionIndicator.set_rotation(mouse_angle.angle() + 3 * PI/2)
+		$DirectionIndicator.set_rotation(mouse_angle.angle() + PI/2)
 	
 	if event is InputEventMouseButton and event.is_pressed() and mouse_angle != null and mouse_angle.angle() != null and event.button_index == MOUSE_BUTTON_LEFT:
-		$ComboIndicator.set_rotation(mouse_angle.angle() + PI / 2)
+		$ComboIndicator.set_rotation(mouse_angle.angle() + 3 * PI / 2)
 		$ComboFade.stop()
 
 		
