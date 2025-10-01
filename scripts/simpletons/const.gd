@@ -6,7 +6,7 @@ const X_SENS = 0.001
 const Y_SENS = 0.0005
 const BASE_FOV = 85
 const FOV_CHANGE = 1.5
-const ANGLE_BUFFER = 5
+const ANGLE_BUFFER = 10
 
 # player
 const WALK_SPEED = 2.0

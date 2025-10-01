@@ -24,7 +24,7 @@ func _input(event):
 		mouse_movement_array.resize(cons.ANGLE_BUFFER)
 		
 		var sum := Vector2.ZERO
-		for i in cons.ANGLE_BUFFER:
+		for i in range(0, cons.ANGLE_BUFFER):
 			sum += mouse_movement_array[i]
 		
 		mouse_angle = sum

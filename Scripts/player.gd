@@ -59,22 +59,22 @@ func _physics_process(delta):
 func _process(_delta):
 	if Input.is_action_just_pressed("escape"):
 		get_tree().quit()
-	
-	mouse_movement_angle = _get_mouse_movement()
 
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		_move_camera(event)
-		mouse_movement_angle = event.screen_relative
+		mouse_movement_angle = _get_mouse_movement(event.screen_relative)
 
 	if event is InputEventMouseButton and event.is_pressed() and mouse_movement_angle != null and event.button_index == MOUSE_BUTTON_LEFT:
-		var current_swing_angle: float = rad_to_deg(mouse_movement_angle.angle())
+		var current_swing_angle: float = - PI / 2 - mouse_movement_angle.angle()
 		
 		match state_machine.get_current_node():
 			"idle":
 				_set_swing_params()
 				state_machine.travel("windup")
+			"windup":
+				pass
 			"swinger":
 				_set_swing_params()
 				_combo(current_swing_angle)
@@ -83,28 +83,25 @@ func _unhandled_input(event):
 			"winddown":
 				pass
 		
-		last_swing_angle = rad_to_deg(mouse_movement_angle.angle())
+		last_swing_angle = - PI / 2 - mouse_movement_angle.angle()
+
 
 func _combo(current_swing_angle):
-	var left_bound = normalize_rotation(last_swing_angle - 120)
-	var right_bound = normalize_rotation(last_swing_angle + 120)
-	
-	#print("\ncurrent_swing_angle: ", current_swing_angle, "\nleft_bound: ", left_bound, "\nright_bound: ", right_bound)
-	
-	# scuffed as shit, will fix one day
-	var in_range_left = -181 > current_swing_angle and current_swing_angle > left_bound
-	var in_range_right = 181 > current_swing_angle and current_swing_angle > right_bound
-	if in_range_left or in_range_right:
-		#print("fired")
+	var combo_direction = last_swing_angle + PI
+	var angle_to_combo_direction = angle_difference(combo_direction, current_swing_angle)
+
+	if rad_to_deg(abs(angle_to_combo_direction)) < 40:
 		state_machine.travel("combo")
 
+
 func normalize_rotation(angle):
-	if angle < -181:
+	if angle < -180.1:
 		angle = angle + 360
-	elif angle > 181:
+	elif angle > 180.1:
 		angle = angle - 360
 	
 	return angle
+
 
 func _set_swing_params():
 	var swingAngle = Vector3(0.0, 0.0, - PI/2 - mouse_movement_angle.angle())
@@ -146,15 +143,16 @@ func _move_camera(event):
 	$Camera3D.rotate_x(x_rotation)
 
 
-func _get_mouse_movement():
+func _get_mouse_movement(angle):
 	var sum = Vector2.ZERO
 	
-	if mouse_movement_angle != Vector2.ZERO:
+	if angle != Vector2.ZERO:
 
-		mouse_movement_array.push_front(mouse_movement_angle)
+		mouse_movement_array.push_front(angle)
 		mouse_movement_array.resize(cons.ANGLE_BUFFER)
 		
-		for i in cons.ANGLE_BUFFER:
+		
+		for i in range(0, cons.ANGLE_BUFFER):
 			sum += mouse_movement_array[i]
 		
 	return sum
