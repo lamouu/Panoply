@@ -11,7 +11,6 @@ enum COMPONENT_TYPES {
 
 func _ready() -> void:
 	create_sword()
-	#%AnimationPlayer.connect("animation_started", switch_sword)
 
 func _unhandled_input(event) -> void:
 	if event is InputEventKey:
@@ -26,9 +25,7 @@ func switch_sword() -> void:
 func create_sword() -> void:
 	for component_type in COMPONENT_TYPES:
 		var component = _pick_component(component_type) # THIS ISNT WORKING
-		print(component)
 		var component_resource = load(component)
-		print(component_resource)
 		var component_instance = component_resource.instantiate()
 		add_child(component_instance)
 
