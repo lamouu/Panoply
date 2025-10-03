@@ -660,6 +660,7 @@ script = ExtResource("3_fjrip")
 
 [node name="TestSword" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
 transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, -0.135, -0.05)
+visible = false
 
 [node name="Handle1" parent="Camera3D/Reference/Shoulder/Elbow/Wrist/TestSword" instance=ExtResource("4_smehm")]
 transform = Transform3D(0.99999976, -6.1533e-08, -7.704449e-09, -2.9802322e-08, 0.9999999, 1.4901161e-08, 0, 0, 0.9999999, 0, 0, 0)
