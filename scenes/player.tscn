@@ -230,6 +230,70 @@ tracks/4/keys = {
 "values": [Vector3(0.12, -0.2, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_smehm"]
+resource_name = "sheath"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6333333, 1.2),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(-1.2217305, 0, 0), Vector3(-0.6981317, 0, 0), Vector3(0.5061455, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(-0.9599311, 0, 0), Vector3(-0.27052602, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(1.9198622, 0, 0), Vector3(1.3962634, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.89),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, -0.4712389), Vector3(0, 0, 2.5848327)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(0.12, -0.2, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_dqkch"]
 resource_name = "swinger"
 tracks/0/type = "bezier"
@@ -276,6 +340,84 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(-2),
 "update": 0,
 "values": [Vector3(0, -0.2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ur7pv"]
+resource_name = "unsheath"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(0.5061455, 0, 0), Vector3(-0.6981317, 0, 0), Vector3(-1.2217305, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.00999999, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(-0.27052602, 0, 0), Vector3(-0.9599311, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.00999999, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(1.3962634, 0, 0), Vector3(1.9198622, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(0, 0, 2.5848327), Vector3(0, 0, -0.4712389)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(-1.741101),
+"update": 0,
+"values": [Vector3(0.12, -0.2, 0)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist/PlayerSword")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch_sword"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_qlg0r"]
@@ -398,148 +540,6 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(-2, -2),
 "update": 0,
 "values": [Vector3(0.12, -0.2, 0), Vector3(0, -0.2, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_smehm"]
-resource_name = "sheath"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6333333, 1.2),
-"transitions": PackedFloat32Array(-2, -2, -2),
-"update": 0,
-"values": [Vector3(-1.2217305, 0, 0), Vector3(-0.6981317, 0, 0), Vector3(0.5061455, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.9),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector3(-0.9599311, 0, 0), Vector3(-0.27052602, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.9),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector3(1.9198622, 0, 0), Vector3(1.3962634, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Camera3D/Reference:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.89),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector3(0, 0, -0.4712389), Vector3(0, 0, 2.5848327)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Camera3D/Reference:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(-2),
-"update": 0,
-"values": [Vector3(0.12, -0.2, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_ur7pv"]
-resource_name = "unsheath"
-length = 1.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7, 1.2),
-"transitions": PackedFloat32Array(-1.741101, -1.741101, -1.741101),
-"update": 0,
-"values": [Vector3(0.5061455, 0, 0), Vector3(-0.6981317, 0, 0), Vector3(-1.2217305, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.00999999, 1.2),
-"transitions": PackedFloat32Array(-1.741101, -1.741101),
-"update": 0,
-"values": [Vector3(-0.27052602, 0, 0), Vector3(-0.9599311, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.00999999, 1.2),
-"transitions": PackedFloat32Array(-1.741101, -1.741101),
-"update": 0,
-"values": [Vector3(1.3962634, 0, 0), Vector3(1.9198622, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Camera3D/Reference:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.2),
-"transitions": PackedFloat32Array(-1.741101, -1.741101),
-"update": 0,
-"values": [Vector3(0, 0, 2.5848327), Vector3(0, 0, -0.4712389)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Camera3D/Reference:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(1.2),
-"transitions": PackedFloat32Array(-1.741101),
-"update": 0,
-"values": [Vector3(0.12, -0.2, 0)]
-}
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist/PlayerSword")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"switch_sword"
-}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
