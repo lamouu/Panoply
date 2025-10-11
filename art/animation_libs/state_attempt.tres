@@ -1,0 +1,80 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=19 format=3 uid="uid://xop57qnujvw0"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nih54"]
+animation = &"combo"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g2els"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ynlkn"]
+animation = &"sheath"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_afd25"]
+animation = &"swinger"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7hfqk"]
+animation = &"unsheath"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ciry2"]
+animation = &"winddown"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8lds2"]
+animation = &"windup"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qhqgy"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ciry2"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_afd25"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nih54"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ynlkn"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7hfqk"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8lds2"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8stco"]
+xfade_time = 0.7
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yafs0"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ossgy"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g10o6"]
+switch_mode = 2
+advance_mode = 2
+
+[resource]
+states/End/position = Vector2(958, 147)
+states/Start/position = Vector2(266, 211)
+states/combo/node = SubResource("AnimationNodeAnimation_nih54")
+states/combo/position = Vector2(715, 82)
+states/idle/node = SubResource("AnimationNodeAnimation_g2els")
+states/idle/position = Vector2(382, 211)
+states/sheath/node = SubResource("AnimationNodeAnimation_ynlkn")
+states/sheath/position = Vector2(325, 301)
+states/swinger/node = SubResource("AnimationNodeAnimation_afd25")
+states/swinger/position = Vector2(611, 142)
+states/unsheath/node = SubResource("AnimationNodeAnimation_7hfqk")
+states/unsheath/position = Vector2(459, 302)
+states/winddown/node = SubResource("AnimationNodeAnimation_ciry2")
+states/winddown/position = Vector2(715, 211)
+states/windup/node = SubResource("AnimationNodeAnimation_8lds2")
+states/windup/position = Vector2(487, 142)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qhqgy"), "idle", "windup", SubResource("AnimationNodeStateMachineTransition_ciry2"), "windup", "swinger", SubResource("AnimationNodeStateMachineTransition_afd25"), "swinger", "winddown", SubResource("AnimationNodeStateMachineTransition_nih54"), "winddown", "idle", SubResource("AnimationNodeStateMachineTransition_ynlkn"), "swinger", "combo", SubResource("AnimationNodeStateMachineTransition_7hfqk"), "combo", "swinger", SubResource("AnimationNodeStateMachineTransition_8lds2"), "winddown", "combo", SubResource("AnimationNodeStateMachineTransition_8stco"), "idle", "sheath", SubResource("AnimationNodeStateMachineTransition_yafs0"), "sheath", "unsheath", SubResource("AnimationNodeStateMachineTransition_ossgy"), "unsheath", "idle", SubResource("AnimationNodeStateMachineTransition_g10o6")]
+graph_offset = Vector2(-55, 29)

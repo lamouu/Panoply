@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cym4x58rxf7qy"]
+
+[ext_resource type="Script" uid="uid://bb030veembnn5" path="res://scripts/player.gd" id="1_y0qk3"]
+[ext_resource type="PackedScene" uid="uid://cof4p1iry4g4x" path="res://art/models/sword2.glb" id="2_g2els"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ojbdc"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y0qk3"]
+radius = 0.4
+height = 1.8
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_y0qk3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ojbdc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y0qk3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.661619, 0)
+
+[node name="WeaponPivot" type="Node3D" parent="Camera3D"]
+
+[node name="PlayerWeapon" parent="Camera3D/WeaponPivot" instance=ExtResource("2_g2els")]
+unique_name_in_owner = true
+transform = Transform3D(-1.18021e-08, 0.225926, -0.147843, 0, -0.147842, -0.225927, -0.27, -9.87554e-09, 6.4624e-09, 0, -0.375, -0.5)

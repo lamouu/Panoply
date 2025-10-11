@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=3 uid="uid://cym4x58rxf7qy"]
+
+[ext_resource type="Script" uid="uid://bb030veembnn5" path="res://scripts/player.gd" id="1_y0qk3"]
+[ext_resource type="PackedScene" uid="uid://dsjsdysjwu4qt" path="res://art/models/model_packages/test_sword.glb" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://daocyky3vvj6y" path="res://scripts/ui/debug_path.gd" id="4_dqkch"]
+[ext_resource type="AnimationLibrary" uid="uid://b3gg5iabe51d7" path="res://art/animation_libs/idle_lib.tres" id="4_qlg0r"]
+
+[sub_resource type="Curve" id="Curve_qhqgy"]
+_data = [Vector2(0, 0.1685394), 0.0, 0.07211134, 0, 0, Vector2(0.6325581, 0.39325845), 1.0468166, 1.0468166, 0, 0, Vector2(1, 1), 1.8252184, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ojbdc"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y0qk3"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="GDScript" id="GDScript_qhqgy"]
+script/source = "extends Camera3D
+
+var SWING_START_ROTATIION := .1
+var SWING_END_ROTATIION := PI
+
+func calc_swing(screenAngle):
+	var swingDirection = Quaternion(Vector3.FORWARD, screenAngle.angle() - PI/2)
+	swingDirection = swingDirection.normalized()
+	
+	var swingStart = swingDirection*Quaternion(Vector3.MODEL_RIGHT, SWING_START_ROTATIION)
+	swingStart = swingStart.normalized()
+	
+	var swingEnd = swingDirection*Quaternion(Vector3.MODEL_RIGHT, SWING_END_ROTATIION)
+	swingEnd = swingEnd.normalized()
+	
+	return {\"start\": swingStart, \"end\": swingEnd}
+"
+
+[sub_resource type="Curve3D" id="Curve3D_dqkch"]
+bake_interval = 0.01
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_y0qk3")
+swing_curve = SubResource("Curve_qhqgy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ojbdc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y0qk3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.661619, 0)
+fov = 85.0
+script = SubResource("GDScript_qhqgy")
+
+[node name="WeaponPivot" type="Node3D" parent="Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0.46126786, -0.5537075, -0.727506)
+
+[node name="PlayerWeapon" parent="Camera3D/WeaponPivot" instance=ExtResource("3_dqkch")]
+transform = Transform3D(0.1, 0, 0, 0, 0.10000006, 0, 0, 0, 0.10000006, -0.0060638785, 0.22135475, -0.010177404)
+
+[node name="TipCast" type="RayCast3D" parent="Camera3D/WeaponPivot"]
+transform = Transform3D(0.5, 0, 0, 0, 0.49999997, 0, 0, 0, 0.49999997, -0.008401185, 1.0422606, -0.00812906)
+
+[node name="Path3D" type="Path3D" parent="Camera3D/WeaponPivot/TipCast"]
+top_level = true
+curve = SubResource("Curve3D_dqkch")
+script = ExtResource("4_dqkch")
+
+[node name="MidCast" type="RayCast3D" parent="Camera3D/WeaponPivot"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0030319393, 0.6526813, -0.02990818)
+
+[node name="Path3D" type="Path3D" parent="Camera3D/WeaponPivot/MidCast"]
+top_level = true
+curve = SubResource("Curve3D_dqkch")
+script = ExtResource("4_dqkch")
+
+[node name="BaseCast" type="RayCast3D" parent="Camera3D/WeaponPivot"]
+transform = Transform3D(0.5, 0, 0, 0, 0.50000006, 0, 0, 0, 0.50000006, -0.0030319393, 0.35501647, -0.042155087)
+
+[node name="Path3D" type="Path3D" parent="Camera3D/WeaponPivot/BaseCast"]
+top_level = true
+curve = SubResource("Curve3D_dqkch")
+script = ExtResource("4_dqkch")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": ExtResource("4_qlg0r")
+}
+autoplay = "idle"

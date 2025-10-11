@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://cym4x58rxf7qy"]
+
+[ext_resource type="Script" uid="uid://bb030veembnn5" path="res://scripts/player.gd" id="1_y0qk3"]
+[ext_resource type="PackedScene" uid="uid://cof4p1iry4g4x" path="res://art/models/sword2.glb" id="2_g2els"]
+[ext_resource type="Script" uid="uid://bmgcc5vv02d60" path="res://scripts/camera_3d.gd" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://daocyky3vvj6y" path="res://scenes/path_3d.gd" id="4_dqkch"]
+
+[sub_resource type="Curve" id="Curve_qhqgy"]
+_limits = [0.0, 0.15, 0.0, 2.0]
+_data = [Vector2(0, 0), 0.0, 0.244242, 0, 0, Vector2(0.425532, 0.047191), -0.00848716, -0.00848716, 0, 0, Vector2(2, 0), -0.120405, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ojbdc"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y0qk3"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="Curve3D" id="Curve3D_dqkch"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
+"tilts": PackedFloat32Array(0)
+}
+point_count = 1
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_y0qk3")
+swing_inter = SubResource("Curve_qhqgy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ojbdc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y0qk3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.661619, 0)
+script = ExtResource("2_qhqgy")
+
+[node name="WeaponPivot" type="Node3D" parent="Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.594602, -0.727506)
+
+[node name="PlayerWeapon" parent="Camera3D/WeaponPivot" instance=ExtResource("2_g2els")]
+transform = Transform3D(-1.31134e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.31134e-08, 0, 0.511116, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D/WeaponPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.29262, 0)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Camera3D/WeaponPivot/RayCast3D"]
+polygon = PackedVector2Array()
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Path3D" type="Path3D" parent="Camera3D/WeaponPivot/RayCast3D"]
+curve = SubResource("Curve3D_dqkch")
+script = ExtResource("4_dqkch")

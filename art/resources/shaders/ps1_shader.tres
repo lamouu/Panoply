@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dtlrmypigcf31"]
+
+[ext_resource type="Shader" uid="uid://blj2a8v6maw6l" path="res://art/resources/shaders/ps1_shader.gdshader" id="1_312s1"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_312s1")

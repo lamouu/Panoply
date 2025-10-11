@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://iwyuxs52h46x"]
+
+[ext_resource type="PackedScene" uid="uid://d3ppxb5vakmbs" path="res://art/models/model_packages/dummy.glb" id="1_kre8v"]
+[ext_resource type="Material" uid="uid://cas1o3g3q2us7" path="res://art/resources/shaders/toon.tres" id="2_k5f3b"]
+
+[node name="dummy" instance=ExtResource("1_kre8v")]
+
+[node name="Cylinder_001" parent="." index="1"]
+material_override = ExtResource("2_k5f3b")
+
+[node name="CollisionShape3D" parent="Cylinder_001/StaticBody3D" index="0"]
+debug_color = Color(0.8910163, 0.00024816216, 0.7930408, 0.41960785)

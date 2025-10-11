@@ -1,23 +1,673 @@
-[gd_scene load_steps=4 format=3 uid="uid://bt1i0ip4mywca"]
+[gd_scene load_steps=22 format=3 uid="uid://cym4x58rxf7qy"]
 
-[ext_resource type="Script" uid="uid://dydvuit5grl58" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://bb030veembnn5" path="res://scripts/player.gd" id="1_y0qk3"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://xop57qnujvw0" path="res://art/animation_libs/state_attempt.tres" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://co7tq1c8363r7" path="res://scenes/player_sword.gd" id="3_fjrip"]
+[ext_resource type="PackedScene" uid="uid://dgkwmfmw6vjtj" path="res://art/swords/guards/Guard1.glb" id="4_fjrip"]
+[ext_resource type="PackedScene" uid="uid://mxqcm37aboa5" path="res://art/swords/handles/Handle1.glb" id="4_smehm"]
+[ext_resource type="PackedScene" uid="uid://bhgd0klmugteh" path="res://art/swords/blades/Blade1.glb" id="5_ur7pv"]
+[ext_resource type="PackedScene" uid="uid://tdum8c5gbdrx" path="res://art/swords/pommels/Pommel1.glb" id="7_y4r1p"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_g2els"]
+[sub_resource type="Animation" id="Animation_fjrip"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.1082841, -0.25, 0, 1.0333333, -0.42193568),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.9896754, -0.25, 0, 1.1333333, -0.037797987),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.1170107, -0.25, 0, 0.2, -1.4112657),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.35, -0.2, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera3D/Reference/Shoulder:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.2217305, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.0943952, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.9599311, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "combo"
+length = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.3962634, 0, 0, 0.20000002, -0.4190791),
+"times": PackedFloat32Array(0.1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.7853982, 0, 0, 0.20000002, -0.1308997),
+"times": PackedFloat32Array(0.1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.08726646, -0.25, 0, 0.2, -1.4112657),
+"times": PackedFloat32Array(0.1)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.2, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -0.4712389)]
+}
+
+[sub_resource type="Animation" id="Animation_g2els"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(-1.2217305, 0, 0), Vector3(-1.394518, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(-0.9599311, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(1.9198622, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, -0.4712389), Vector3(0, 0, -0.30194196)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(0.12, -0.2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_smehm"]
+resource_name = "sheath"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6333333, 1.2),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(-1.2217305, 0, 0), Vector3(-0.6981317, 0, 0), Vector3(0.5061455, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(-0.9599311, 0, 0), Vector3(-0.27052602, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(1.9198622, 0, 0), Vector3(1.3962634, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.89),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, -0.4712389), Vector3(0, 0, 2.5848327)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(0.12, -0.2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "swinger"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(1.3962634, 0, 0, 0.43333334, -3.9012182, -1.7413439, -0.5666666, 0.66400945, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.7853982, 0, 0, 0.16666667, -1.1171094, 0, -0.36666673, 0.17139369, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.08726646, -0.25, 0, 0.2, -1.3107258, -1.5160682, -0.33333337, 0.044825673, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(0, -0.2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ur7pv"]
+resource_name = "unsheath"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(0.5061455, 0, 0), Vector3(-0.6981317, 0, 0), Vector3(-1.2217305, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.00999999, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(-0.27052602, 0, 0), Vector3(-0.9599311, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.00999999, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(1.3962634, 0, 0), Vector3(1.9198622, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(-1.741101, -1.741101),
+"update": 0,
+"values": [Vector3(0, 0, 2.5848327), Vector3(0, 0, -0.4712389)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(-1.741101),
+"update": 0,
+"values": [Vector3(0.12, -0.2, 0)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist/PlayerSword")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch_sword"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "winddown"
+length = 0.7
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(-1.7453293, -0.11666667, 0.5235988, 0, 0, -1.2217305, -0.19999999, 0.02570951, 0, 0),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.36666673, 0.17139369, 0, 0, 1.9198622, -0.56666666, -0.53667295, 0, 0),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(-1.5160682, -0.33333337, 0.044825673, 0, 0, -0.9599311, -0.3333333, -0.016582668, 0, 0),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0.120000005, -0.2, 0), Vector3(0.12, -0.2, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, -0.4712389), Vector3(0, 0, -0.4712389)]
+}
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+resource_name = "windup"
+length = 0.7
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Reference/Shoulder:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1.2217305, 0, 0, 0.6, 1.0820881, 1.3962634, -0.083333336, -0.43633232, 0, 0),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Reference/Shoulder/Elbow:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(1.9198622, 0, 0, 0.083333336, -0.18907735, 0.7853982, 0, 0, 0.20000002, -0.1308997),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Reference/Shoulder/Elbow/Wrist:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(-0.9599311, 0, 0, 0.083333336, 0.17453294, 0.08726646, -0.25, 0, 0.2, -1.4112657),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Reference:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, -0.4712389), Vector3(0, 0, -1.6109389)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D/Reference:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0.12, -0.2, 0), Vector3(0, -0.2, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
+_data = {
+&"RESET": SubResource("Animation_fjrip"),
+&"combo": SubResource("Animation_tuyoq"),
+&"idle": SubResource("Animation_g2els"),
+&"sheath": SubResource("Animation_smehm"),
+&"swinger": SubResource("Animation_dqkch"),
+&"unsheath": SubResource("Animation_ur7pv"),
+&"winddown": SubResource("Animation_qlg0r"),
+&"windup": SubResource("Animation_qhqgy")
+}
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ojbdc"]
 radius = 0.4
 height = 1.8
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qhqgy"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y0qk3"]
 radius = 0.4
 height = 1.8
+
+[sub_resource type="GDScript" id="GDScript_qhqgy"]
+script/source = "extends Camera3D
+
+var SWING_START_ROTATIION := .1
+var SWING_END_ROTATIION := PI
+
+func calc_swing(screenAngle):
+	var swingDirection = Quaternion(Vector3.FORWARD, screenAngle.angle() - PI/2)
+	swingDirection = swingDirection.normalized()
+	
+	var swingStart = swingDirection*Quaternion(Vector3.MODEL_RIGHT, SWING_START_ROTATIION)
+	swingStart = swingStart.normalized()
+	
+	var swingEnd = swingDirection*Quaternion(Vector3.MODEL_RIGHT, SWING_END_ROTATIION)
+	swingEnd = swingEnd.normalized()
+	
+	return {\"start\": swingStart, \"end\": swingEnd}
+"
+
+[sub_resource type="SphereMesh" id="SphereMesh_qhqgy"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dqkch"]
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_3vyb7")
+script = ExtResource("1_y0qk3")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+deterministic = false
+tree_root = ExtResource("2_qhqgy")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_qlg0r")
+}
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_g2els")
+visible = false
+mesh = SubResource("CapsuleMesh_ojbdc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_qhqgy")
+shape = SubResource("CapsuleShape3D_y0qk3")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53057706, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.661619, 0)
+script = SubResource("GDScript_qhqgy")
+
+[node name="Reference" type="Node3D" parent="Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.2, 0)
+
+[node name="Shoulder" type="Node3D" parent="Camera3D/Reference"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.34202006, 0.9396923, 0, -0.9396923, 0.34202006, 0, 0, 0)
+
+[node name="joint" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_qhqgy")
+
+[node name="bone" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder"]
+transform = Transform3D(0.05, 0, 0, 0, -8.742278e-09, 0.05, 0, -0.2, -2.1855695e-09, 0, 0, -0.2)
+visible = false
+mesh = SubResource("CylinderMesh_dqkch")
+
+[node name="Elbow" type="Node3D" parent="Camera3D/Reference/Shoulder"]
+transform = Transform3D(1, 0, 0, 0, -0.49999988, -0.8660251, 0, 0.8660251, -0.49999988, 0, 0, -0.35)
+
+[node name="joint" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_qhqgy")
+
+[node name="bone" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow"]
+transform = Transform3D(0.05, 0, 0, 0, -8.742278e-09, 0.05, 0, -0.2, -2.1855695e-09, 0, 0, -0.2)
+visible = false
+mesh = SubResource("CylinderMesh_dqkch")
+
+[node name="Wrist" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow"]
+transform = Transform3D(1, 0, 0, 0, 0.5735764, 0.819152, 0, -0.819152, 0.5735764, 0, 0, -0.25)
+
+[node name="joint" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_qhqgy")
+
+[node name="bone" type="MeshInstance3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
+transform = Transform3D(0.05, 0, 0, 0, -2.1855695e-09, 0.05, 0, -0.05, -2.1855695e-09, 0, 0, -0.05)
+visible = false
+mesh = SubResource("CylinderMesh_dqkch")
+
+[node name="PlayerSword" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
+transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, -0.135, -0.05)
+script = ExtResource("3_fjrip")
+
+[node name="TestSword" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
+transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, -0.135, -0.05)
+visible = false
+
+[node name="Handle1" parent="Camera3D/Reference/Shoulder/Elbow/Wrist/TestSword" instance=ExtResource("4_smehm")]
+transform = Transform3D(0.99999976, -6.1533e-08, -7.704449e-09, -2.9802322e-08, 0.9999999, 1.4901161e-08, 0, 0, 0.9999999, 0, 0, 0)
+
+[node name="Blade1" parent="Camera3D/Reference/Shoulder/Elbow/Wrist/TestSword" instance=ExtResource("5_ur7pv")]
+
+[node name="Pommel1" parent="Camera3D/Reference/Shoulder/Elbow/Wrist/TestSword" instance=ExtResource("7_y4r1p")]
+
+[node name="Guard1" parent="Camera3D/Reference/Shoulder/Elbow/Wrist/TestSword" instance=ExtResource("4_fjrip")]
+transform = Transform3D(0.9999999, -3.1730675e-08, -7.704448e-09, 0, 0.99999994, 0, 0, -1.4901161e-08, 0.99999994, 0, 0, 0)
