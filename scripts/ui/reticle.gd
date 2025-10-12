@@ -1,8 +1,15 @@
 extends CenterContainer
 
-@export var DOT_RADIUS: float = 2.0
+@export var DOT_RADIUS: float = 1.5
 @export var DOT_COLOUR: Color = Color.WHITE
+
 @onready var animation_player = $"../../Player/AnimationTree"
+@onready var combo_indicator: Node2D = $ComboIndicator
+@onready var combo_fade: Timer = $ComboFade
+@onready var direction_indicator: Node2D = $Clipper/DirectionIndicator
+
+
+
 
 const POSSIBLE_SWING_ARRAY := [0, 45, 90, 135, 180, 225, 270, 315]
 
@@ -30,24 +37,23 @@ func _input(event):
 			sum += mouse_movement_array[i]
 		
 		mouse_angle = sum
-		
-		#var indicator_rotation = closest(rad_to_deg(mouse_angle.angle()), POSSIBLE_SWING_ARRAY) + 90
-		#print(indicator_rotation)
-		$DirectionIndicator.set_rotation(mouse_angle.angle() + PI/2)
+
+		direction_indicator.set_rotation(mouse_angle.angle() + PI/2)
 	
 	if event is InputEventMouseButton and event.is_pressed() and mouse_angle != null and mouse_angle.angle() != null and event.button_index == MOUSE_BUTTON_LEFT:
-		$ComboIndicator.set_rotation(mouse_angle.angle() + 3 * PI / 2)
-		$ComboFade.stop()
+		combo_indicator.set_rotation(mouse_angle.angle() + 3 * PI / 2)
+		combo_fade.stop()
 
 		
 func _new_animation(animation):
 	if animation == "swinger":
-		$ComboIndicator.modulate = Color(1.0, 1.0, 1.0, 0.0)
-		$ComboFade.start(1.5)
+		combo_indicator.modulate = Color(1.0, 1.0, 1.0, 0.0)
+		combo_fade.start(1.5)
 
 func _fade_indicator():
-	var weight = $ComboFade.time_left / 3
-	$ComboIndicator.modulate = Color(1.0, 1.0, 1.0, weight)
+	var weight = combo_fade.time_left / 3
+	combo_indicator.modulate = Color(1.0, 1.0, 1.0, weight)
 
 func _draw():
-	draw_circle(Vector2(0,0), DOT_RADIUS, DOT_COLOUR)
+	draw_circle(Vector2(0,0), DOT_RADIUS, DOT_COLOUR, true, -1.0, true)
+	

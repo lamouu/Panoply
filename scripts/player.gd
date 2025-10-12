@@ -90,7 +90,7 @@ func _combo(current_swing_angle):
 	var combo_direction = last_swing_angle + PI
 	var angle_to_combo_direction = angle_difference(combo_direction, current_swing_angle)
 
-	if rad_to_deg(abs(angle_to_combo_direction)) < 40:
+	if rad_to_deg(abs(angle_to_combo_direction)) < cons.COMBO_ANGLE:
 		state_machine.travel("combo")
 
 

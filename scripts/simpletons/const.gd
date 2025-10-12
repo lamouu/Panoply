@@ -20,3 +20,4 @@ const BOB_AMPLITUDE = 0.04
 
 # sword
 const TURN_CAP = 0.05
+const COMBO_ANGLE = 90
