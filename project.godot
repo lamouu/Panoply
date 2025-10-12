@@ -21,6 +21,7 @@ DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
 [display]
 
+window/size/mode=3
 window/vsync/vsync_mode=0
 
 [editor_plugins]
@@ -101,23 +102,23 @@ interact={
 
 [shader_globals]
 
-diffuse_curve={
-"type": "sampler2D",
-"value": "res://art/toon_shader/diffuse_curve.tres"
-}
 specular_smoothness={
 "type": "float",
 "value": 0.05
 }
 fresnel_smoothness={
 "type": "float",
-"value": 0.0
+"value": 0.05
 }
 outline_width={
 "type": "float",
-"value": 0.0
+"value": 4.0
 }
 outline_color={
 "type": "color",
 "value": Color(0, 0, 0, 1)
+}
+diffuse_curve={
+"type": "sampler2D",
+"value": "res://art/shaders/diffuse_curve.tres"
 }

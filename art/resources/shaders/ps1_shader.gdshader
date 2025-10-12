@@ -1,6 +1,5 @@
 shader_type spatial;
-render_mode vertex_lighting, skip_vertex_transform, 
-			specular_phong, diffuse_lambert_wrap;
+render_mode vertex_lighting, skip_vertex_transform, diffuse_lambert_wrap;
 
 uniform sampler2D albedo: hint_black_albedo;
 uniform sampler2D specular: hint_black;

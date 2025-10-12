@@ -4,6 +4,8 @@ extends CenterContainer
 @export var DOT_COLOUR: Color = Color.WHITE
 @onready var animation_player = $"../../Player/AnimationTree"
 
+const POSSIBLE_SWING_ARRAY := [0, 45, 90, 135, 180, 225, 270, 315]
+
 var mouse_movement_array : Array
 var mouse_angle
 
@@ -29,6 +31,8 @@ func _input(event):
 		
 		mouse_angle = sum
 		
+		#var indicator_rotation = closest(rad_to_deg(mouse_angle.angle()), POSSIBLE_SWING_ARRAY) + 90
+		#print(indicator_rotation)
 		$DirectionIndicator.set_rotation(mouse_angle.angle() + PI/2)
 	
 	if event is InputEventMouseButton and event.is_pressed() and mouse_angle != null and mouse_angle.angle() != null and event.button_index == MOUSE_BUTTON_LEFT:
