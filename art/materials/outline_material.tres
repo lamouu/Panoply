@@ -5,5 +5,5 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_i6kdp")
-shader_parameter/albedo = Color(0, 0, 0, 1)
-shader_parameter/grow = 0.0
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_threshold = 10.0

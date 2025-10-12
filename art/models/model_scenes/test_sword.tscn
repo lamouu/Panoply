@@ -1,5 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqxdw7m04b4xa"]
+[gd_scene load_steps=3 format=3 uid="uid://bqxdw7m04b4xa"]
 
 [ext_resource type="PackedScene" uid="uid://dsjsdysjwu4qt" path="res://art/models/model_packages/test_sword.glb" id="1_paxeq"]
+[ext_resource type="Material" uid="uid://cv1cmljkwx0wa" path="res://art/materials/outline_material.tres" id="2_aqkdh"]
 
 [node name="test_sword" instance=ExtResource("1_paxeq")]
+
+[node name="Cylinder" parent="." index="0"]
+material_overlay = ExtResource("2_aqkdh")
+
+[node name="Icosphere" parent="." index="1"]
+material_overlay = ExtResource("2_aqkdh")
+
+[node name="Cylinder_001" parent="." index="2"]
+material_overlay = ExtResource("2_aqkdh")
+
+[node name="Cylinder_002" parent="." index="3"]
+material_overlay = ExtResource("2_aqkdh")

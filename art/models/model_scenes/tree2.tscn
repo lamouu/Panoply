@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsfkgysgj04gv"]
+
+[ext_resource type="PackedScene" uid="uid://f4smbeulykod" path="res://art/models/model_packages/Tree.glb" id="1_l0j5a"]
+[ext_resource type="Material" uid="uid://cv1cmljkwx0wa" path="res://art/materials/outline_material.tres" id="2_qqjp7"]
+
+[node name="Tree" instance=ExtResource("1_l0j5a")]
+
+[node name="Cylinder" parent="." index="0"]
+material_overlay = ExtResource("2_qqjp7")
+
+[node name="Cylinder_001" parent="." index="1"]
+material_overlay = ExtResource("2_qqjp7")
+
+[node name="Cylinder_002" parent="." index="2"]
+material_overlay = ExtResource("2_qqjp7")
+
+[node name="Cylinder_003" parent="." index="3"]
+material_overlay = ExtResource("2_qqjp7")
+
+[node name="Cylinder_004" parent="." index="4"]
+material_overlay = ExtResource("2_qqjp7")
+
+[node name="Cylinder_005" parent="." index="5"]
+material_overlay = ExtResource("2_qqjp7")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ceq85alsus5m"]
+
+[ext_resource type="PackedScene" uid="uid://d4auefsr21eud" path="res://art/models/model_packages/rock.glb" id="1_lqu2p"]
+[ext_resource type="Material" uid="uid://cv1cmljkwx0wa" path="res://art/materials/outline_material.tres" id="2_fjlbx"]
+
+[node name="rock" instance=ExtResource("1_lqu2p")]
+
+[node name="Cube_001" parent="." index="0"]
+material_overlay = ExtResource("2_fjlbx")

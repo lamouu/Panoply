@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d13yhep3n70yi"]
+
+[ext_resource type="Shader" uid="uid://ri7mue0ug3kh" path="res://art/shaders/post_processing.gdshader" id="1_rg17x"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_rg17x")
+shader_parameter/min_step = 0.0
+shader_parameter/max_step = 0.23999999463552

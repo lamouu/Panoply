@@ -1,13 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://cym4x58rxf7qy"]
+[gd_scene load_steps=26 format=3 uid="uid://cym4x58rxf7qy"]
 
 [ext_resource type="Script" uid="uid://bb030veembnn5" path="res://scripts/player.gd" id="1_y0qk3"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://xop57qnujvw0" path="res://art/animation_libs/state_attempt.tres" id="2_qhqgy"]
 [ext_resource type="Script" uid="uid://co7tq1c8363r7" path="res://scripts/player_sword.gd" id="3_fjrip"]
 [ext_resource type="PackedScene" uid="uid://dgkwmfmw6vjtj" path="res://art/swords/guards/Guard1.glb" id="4_fjrip"]
 [ext_resource type="PackedScene" uid="uid://mxqcm37aboa5" path="res://art/swords/handles/Handle1.glb" id="4_smehm"]
+[ext_resource type="Material" uid="uid://cv1cmljkwx0wa" path="res://art/materials/outline_material.tres" id="4_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://bhgd0klmugteh" path="res://art/swords/blades/Blade1.glb" id="5_ur7pv"]
 [ext_resource type="PackedScene" uid="uid://tdum8c5gbdrx" path="res://art/swords/pommels/Pommel1.glb" id="7_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://bwktaal01aofb" path="res://scenes/interaction_components/interacting_component.tscn" id="8_smehm"]
+[ext_resource type="Material" uid="uid://d13yhep3n70yi" path="res://art/shaders/post_processing.tres" id="8_ur7pv"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 length = 0.001
@@ -586,6 +588,11 @@ func calc_swing(screenAngle):
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_dqkch"]
 
+[sub_resource type="QuadMesh" id="QuadMesh_smehm"]
+material = ExtResource("8_ur7pv")
+flip_faces = true
+size = Vector2(2, 2)
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_y0qk3")
 
@@ -655,9 +662,11 @@ transform = Transform3D(0.05, 0, 0, 0, -2.1855695e-09, 0.05, 0, -0.05, -2.185569
 visible = false
 mesh = SubResource("CylinderMesh_dqkch")
 
-[node name="PlayerSword" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
+[node name="PlayerSword" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist" node_paths=PackedStringArray("state_machine")]
 transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, -0.135, -0.05)
 script = ExtResource("3_fjrip")
+outline_material = ExtResource("4_y4r1p")
+state_machine = NodePath("../../../../../../AnimationTree")
 
 [node name="TestSword" type="Node3D" parent="Camera3D/Reference/Shoulder/Elbow/Wrist"]
 transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, -0.135, -0.05)
@@ -672,5 +681,9 @@ transform = Transform3D(0.99999976, -6.1533e-08, -7.704449e-09, -2.9802322e-08, 
 
 [node name="Guard1" parent="Camera3D/Reference/Shoulder/Elbow/Wrist/TestSword" instance=ExtResource("4_fjrip")]
 transform = Transform3D(0.9999999, -3.1730675e-08, -7.704448e-09, 0, 0.99999994, 0, 0, -1.4901161e-08, 0.99999994, 0, 0, 0)
+
+[node name="Post-processing" type="MeshInstance3D" parent="Camera3D"]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_smehm")
 
 [node name="InteractingComponent" parent="." instance=ExtResource("8_smehm")]

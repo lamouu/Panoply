@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx85lfk4813qf"]
+
+[ext_resource type="PackedScene" uid="uid://dxp7tacygko8o" path="res://art/models/model_packages/sword2.glb" id="1_jdmni"]
+[ext_resource type="Material" uid="uid://cv1cmljkwx0wa" path="res://art/materials/outline_material.tres" id="2_kvbxw"]
+
+[node name="sword2" instance=ExtResource("1_jdmni")]
+
+[node name="Cylinder" parent="." index="0"]
+material_overlay = ExtResource("2_kvbxw")
+
+[node name="Cylinder_001" parent="." index="1"]
+material_overlay = ExtResource("2_kvbxw")
+
+[node name="Cylinder_002" parent="." index="2"]
+material_overlay = ExtResource("2_kvbxw")
+
+[node name="Sphere" parent="." index="3"]
+material_overlay = ExtResource("2_kvbxw")

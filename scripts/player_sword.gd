@@ -7,15 +7,19 @@ enum COMPONENT_TYPES {
 	POMMELS,
 }
 
-@onready var state_machine = $"../../../../../../AnimationTree"["parameters/playback"]
+@export var outline_material: Resource
+
+@export var state_machine: Node
+
 
 func _ready() -> void:
 	create_sword()
 
+
 func _unhandled_input(event) -> void:
 	if event is InputEventKey:
-		if event.pressed and event.is_action("swap") and state_machine.get_current_node() == "idle":
-			state_machine.travel("sheath")
+		if event.pressed and event.is_action("swap") and state_machine["parameters/playback"].get_current_node() == "idle":
+			state_machine["parameters/playback"].travel("sheath")
 
 
 func switch_sword() -> void:
@@ -24,9 +28,10 @@ func switch_sword() -> void:
 
 func create_sword() -> void:
 	for component_type in COMPONENT_TYPES:
-		var component = _pick_component(component_type) # THIS ISNT WORKING
+		var component = _pick_component(component_type)
 		var component_resource = load(component)
 		var component_instance = component_resource.instantiate()
+		component_instance.get_child(0).material_overlay = outline_material
 		add_child(component_instance)
 
 func delete_sword() -> void:

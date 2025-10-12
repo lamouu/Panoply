@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://badqmoucgx51n"]
+
+[ext_resource type="PackedScene" uid="uid://hikfsrc35y0e" path="res://art/models/model_packages/edgy sword.glb" id="1_vodim"]
+[ext_resource type="Material" uid="uid://cv1cmljkwx0wa" path="res://art/materials/outline_material.tres" id="2_8s7qg"]
+
+[node name="edgy sword" instance=ExtResource("1_vodim")]
+
+[node name="Pommel" parent="." index="0"]
+material_overlay = ExtResource("2_8s7qg")
+
+[node name="Handle" parent="." index="1"]
+material_overlay = ExtResource("2_8s7qg")
+
+[node name="Guard" parent="." index="2"]
+material_overlay = ExtResource("2_8s7qg")
+
+[node name="Blade" parent="." index="3"]
+material_overlay = ExtResource("2_8s7qg")

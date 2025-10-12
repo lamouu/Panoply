@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://gna3kofuarp5"]
+
+[ext_resource type="PackedScene" uid="uid://ck3srqqy4ot8f" path="res://art/models/model_packages/Barrel.glb" id="1_b2u13"]
+[ext_resource type="Material" uid="uid://cv1cmljkwx0wa" path="res://art/materials/outline_material.tres" id="2_egj3e"]
+
+[node name="Barrel" instance=ExtResource("1_b2u13")]
+
+[node name="BARREL" parent="." index="0"]
+material_overlay = ExtResource("2_egj3e")
